@@ -1,0 +1,60 @@
+//
+//  VTK-Legacy.cpp
+//  n-body
+//
+//  Created by Luis Paulo Santos on 03/12/2025.
+//
+
+#include "VTK-Legacy.hpp"
+
+#include <string.h>
+
+#define N_CHARS 128
+
+static char fn_root[N_CHARS];
+
+bool VTK_Legacy_init (const char *filename) {
+    
+    strncpy(fn_root, filename, N_CHARS-15);
+    
+    return true;
+}
+
+bool VTK_Legacy_write  (int const t_stamp, PARTICLE const p) {
+    
+    char fn[N_CHARS];
+    FILE *f;
+    
+    snprintf(fn, N_CHARS-1, "%s_%.8d.vtk", fn_root, t_stamp);
+    
+    f = fopen(fn, "wt");
+    if (f==NULL) return false;
+    
+    // header
+    fprintf (f, "# vtk DataFile Version 2.0\n");
+    fprintf (f, "Particle sim t=%.8d\n", t_stamp);
+    fprintf (f, "ASCII\n");
+    
+    // particles data set
+    fprintf (f, "DATASET POLYDATA\n");
+    fprintf (f, "POINTS %d float\n", p.N);
+    for (int i = 0 ; i < p.N ; i++) {
+        fprintf (f, "%f %f %f\n", p.Px[i], p.Py[i], p.Pz[i]);
+    }
+    // particles attributtes
+    fprintf (f, "POINT_DATA %d\n", p.N);
+    // mass
+    fprintf (f, "SCALARS mass float 1\n");
+    fprintf (f, "LOOKUP_TABLE default\n");
+    for (int i = 0 ; i < p.N ; i++) {
+        fprintf (f, "%f\n", p.mass[i]);
+    }
+    // velocity
+    fprintf (f, "VECTORS V float\n");
+    for (int i = 0 ; i < p.N ; i++) {
+        fprintf (f, "%f %f %f\n", p.Vx[i], p.Vy[i], p.Vz[i]);
+    }
+    fclose(f);
+
+    return true;
+}
