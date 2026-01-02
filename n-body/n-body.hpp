@@ -12,8 +12,9 @@
 
 #include "particles.h"
 
-bool nBody_init (PARTICLE &dataSet);
-bool nBody_tStep (PARTICLE &dataSet);
+bool nBody_init (PARTICLE &dataSet, float *BBox);
+void nBody_tStep (PARTICLE &dataSet);
 void nBody_close (PARTICLE dataSet);
+void G_field_tStep (PARTICLE &dataSet);
 
 #endif /* n_body_hpp */

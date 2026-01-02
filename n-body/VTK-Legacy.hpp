@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include "particles.h"
 
-bool VTK_Legacy_init (const char *filename);
+bool VTK_Legacy_init (const char *filenameP, const char *filenameG);
 bool VTK_Legacy_write  (int const t_stamp, PARTICLE const p);
 
 #endif /* VTK_Legacy_hpp */

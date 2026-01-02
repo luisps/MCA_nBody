@@ -9,10 +9,10 @@
 #define particles_h
 
 typedef struct {
-    int N;
-    float *Px, *Py, *Pz;
-    float *mass;
-    float *Vx, *Vy, *Vz;
+    int N;                  // number of particles
+    float *Px, *Py, *Pz;    // arrays of particles' positions
+    float *mass, *radius;   // array  of particles' masses
+    float *Vx, *Vy, *Vz;    // arrays of particles' velocities
 } PARTICLE;
 
 #endif /* particles_h */
